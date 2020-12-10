@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "logger.h"
 #include "unittest.h"
 
 int main (int argc, const char * argv[])
