@@ -3,22 +3,27 @@ CFLAGS  = -g -Wall
 
 default: main.exe
 
-# To create the executable file main.exe we need object files flash.o, logger.o, and unittest.o
+# Executable file main.exe requires object files flash.o, logger.o, and unittest.o
 
-main: flash.o logger.o unittest.o 
-	$(CC) $(CFLAGS) -o main flash.o logger.o unittest.o
+main.exe: main.o unittest.o logger.o flash.o
+	$(CC) $(CFLAGS) -o main.o flash.o logger.o unittest.o
 
-# To create the object file flash.o we need the source files flash.c and configuration.h
+# Object file main.o requires source files main.c and unittest.h
 
-flash.o: flash.c configuration.h 
+main.o: main.c unittest.h
+	$(CC) $(CFLAGS) -c main.c
+
+# Object file flash.o requires source files flash.c and configuration.h
+
+flash.o: flash.c configuration.h
 	$(CC) $(CFLAGS) -c flash.c
 
-# To create the object file logger.o we need the source files logger.c, flash.h and configuration.h
+# Object file logger.o requires source files logger.c, flash.h and configuration.h
 
-logger.o: logger.c flash.h, configuration.h
+logger.o: logger.c flash.h configuration.h
 	$(CC) $(CFLAGS) -c logger.c
 
-# To create the object file unittest.o we need the source files logger.h and configuration.h
+# Object file unittest.o requires source files logger.h and configuration.h
 
 unittest.o:  unittest.c logger.h configuration.h
 	$(CC) $(CFLAGS) -c unittest.c
