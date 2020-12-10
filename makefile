@@ -3,9 +3,6 @@ all: main.exe
 main.exe: main.o
 	gcc -o main.exe main.o
 
-main.o: main.c
-	gcc -c main.c
-
 flash.o: flash.c
 	gcc -c flash.c
      
@@ -14,6 +11,9 @@ logger.o: logger.c
      
 unittest.o: unittest.c
 	gcc -c unittest.c
+
+main.o: main.c
+	gcc -c main.c
 
 clean:
 	rm main.o main.exe
