@@ -7,7 +7,7 @@ default: $(MAIN)
 # Executable file requires object files flash.o, logger.o, unittest.o
 
 $(MAIN): main.o unittest.o logger.o flash.o
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) -v $(CFLAGS) -o $@ $^
 
 # Object file main.o requires source files main.c, logger.h, unittest.h
 
@@ -32,4 +32,4 @@ unittest.o:  unittest.c logger.h configuration.h
 # Type 'make clean' to remove the executable file, old .o object files and *~ backup files
 
 clean: 
-	$(RM) $(MAIN) *.o *~
+	$(RM) -v $(MAIN) *.o *~
