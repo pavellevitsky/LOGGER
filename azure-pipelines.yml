@@ -1,0 +1,14 @@
+# C/C++ with GCC
+# Build your C/C++ project with GCC using make.
+# https://docs.microsoft.com/azure/devops/pipelines/apps/c-cpp/gcc
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    make
+  displayName: 'make'
