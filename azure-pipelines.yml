@@ -10,5 +10,6 @@ pool:
 
 steps:
 - script: |
-    make
+    gcc --version
+    gcc main.c
   displayName: 'make'
