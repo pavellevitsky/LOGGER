@@ -32,4 +32,4 @@ unittest.o:  unittest.c logger.h configuration.h
 # Type 'make clean' to remove the executable file, old .o object files and *~ backup files
 
 clean: 
-	$(RM) -v $(MAIN) *.o *~
+	$(RM) $(MAIN) *.o *~

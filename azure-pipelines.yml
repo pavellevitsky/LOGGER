@@ -12,10 +12,8 @@ steps:
 - script: make
   displayName: '[step] make'
 
-- script: main.exe
-  displayName: '[step] execute main()'
-
 - script: |
-    dir
-    make clean
-    displayName: '[step] make clean'
+   dir *.exe
+   main.exe
+   dir *.bin
+  displayName: '[step] execute main()'
