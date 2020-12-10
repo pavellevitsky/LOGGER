@@ -9,7 +9,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: |
-    gcc --version
-    make
+- script: make
   displayName: '[step] make'
+
+- script: make default
+  displayName: '[step] execute'
+
+- script: make clean
+  displayName: '[step] make clean'

@@ -1,35 +1,35 @@
 CC = gcc
 CFLAGS  = -g -Wall
+MAIN = main.exe
 
-default: main.exe
+default: $(MAIN)
 
-# Executable file main.exe requires object files flash.o, logger.o, and unittest.o
+# Executable file requires object files flash.o, logger.o, unittest.o
 
-main.exe: main.o unittest.o logger.o flash.o
+$(MAIN): main.o unittest.o logger.o flash.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-# Object file main.o requires source files main.c, logger.h and unittest.h
+# Object file main.o requires source files main.c, logger.h, unittest.h
 
 main.o: main.c logger.h unittest.h
 	$(CC) $(CFLAGS) -c main.c
 
-# Object file flash.o requires source files flash.c and configuration.h
+# Object file flash.o requires source files flash.c, configuration.h
 
 flash.o: flash.c configuration.h
 	$(CC) $(CFLAGS) -c flash.c
 
-# Object file logger.o requires source files logger.c, flash.h and configuration.h
+# Object file logger.o requires source files logger.c, flash.h, configuration.h
 
 logger.o: logger.c flash.h configuration.h
 	$(CC) $(CFLAGS) -c logger.c
 
-# Object file unittest.o requires source files logger.h and configuration.h
+# Object file unittest.o requires source files logger.h, configuration.h
 
 unittest.o:  unittest.c logger.h configuration.h
 	$(CC) $(CFLAGS) -c unittest.c
 
-# To start over from scratch, type 'make clean'.
-# This removes the executable file, old .o object files and *~ backup files.
+# Type 'make clean' to remove the executable file, old .o object files and *~ backup files
 
 clean: 
-	$(RM) count *.o *~
+	$(RM) $(MAIN) *.o *~
