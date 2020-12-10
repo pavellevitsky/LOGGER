@@ -11,5 +11,8 @@ pool:
 steps:
 - script: |
     gcc --version
+    gcc flash.c
+    gcc logger.c
+    gcc unittest.c
     gcc main.c
-  displayName: 'make'
+  displayName: '[step] gcc compilation'
