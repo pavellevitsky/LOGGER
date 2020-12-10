@@ -5,7 +5,7 @@ default: main.exe
 
 # Executable file main.exe requires object files flash.o, logger.o, and unittest.o
 
-main: main.o unittest.o logger.o flash.o
+main.exe: main.o unittest.o logger.o flash.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Object file main.o requires source files main.c, logger.h and unittest.h
