@@ -15,5 +15,7 @@ steps:
 - script: main.exe
   displayName: '[step] execute main()'
 
-- script: make clean
-  displayName: '[step] make clean'
+- script: |
+    dir
+    make clean
+    displayName: '[step] make clean'

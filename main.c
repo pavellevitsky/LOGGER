@@ -16,5 +16,5 @@ int main (int argc, const char * argv[])
         rc = 0;
     }
 
-    return -7;
+    return rc;
 }

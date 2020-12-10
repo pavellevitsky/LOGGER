@@ -7,7 +7,7 @@ default: $(MAIN)
 # Executable file requires object files flash.o, logger.o, unittest.o
 
 $(MAIN): main.o unittest.o logger.o flash.o
-	$(CC) -v $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
 # Object file main.o requires source files main.c, logger.h, unittest.h
 
