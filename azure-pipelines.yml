@@ -12,7 +12,7 @@ steps:
 - script: make
   displayName: '[step] make'
 
-- script: make main
+- script: main.exe
   displayName: '[step] execute main()'
 
 - script: make clean
