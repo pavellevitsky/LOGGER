@@ -55,6 +55,17 @@ int logger_open (int mode)
 }
 
 /**
+ * @brief Close the logger session
+ *
+ * This function terminates the current logger session and should be called
+ * for every logger_open() call
+ */
+void logger_close(void)
+{
+    e_mode = IDLE;
+}
+
+/**
  * @brief Read data from the logger
  *
  * This function reads a buffer of data from the logger, after a call to logger_open()
@@ -197,17 +208,6 @@ int logger_write (unsigned char *data, unsigned int size)
     }
 
     return 0;
-}
-
-/**
- * @brief Close the logger session
- *
- * This function terminates the current logger session and should be called
- * for every logger_open() call
- */
-void logger_close (void)
-{
-    e_mode = IDLE;
 }
 
 /**
