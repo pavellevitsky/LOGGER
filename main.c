@@ -19,6 +19,7 @@ int main (int argc, const char * argv[])
     rc_write_read    = test_write_read();
     logger_init();
     rc_flash_full    = test_flash_full();
+    logger_init();
     rc_read_all      = test_read_all();
 
     if (rc_mode_validity &&
