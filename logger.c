@@ -41,7 +41,7 @@ void logger_init (void)
  */
 int logger_open (int mode)
 {
-    if ((mode != 0) && (mode != 1))  // unexpected mode
+    if ((mode != READ) && (mode != WRITE))  // unexpected mode
     {
         return -1;
     }

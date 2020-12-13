@@ -4,16 +4,29 @@
 
 int main (int argc, const char * argv[])
 {
-    int rc = 1;
+    bool rc_mode_validity;
+    bool rc_flash_empty;
+    bool rc_flash_full = true;
+    bool rc_write_read;
+    bool rc_read_all = true;
+    int rc = -1;  // initialise negative return code value
 
     logger_init();
 
-    if (test_flash_empty() &&
-        test_flash_full() &&
-        test_write_read() &&
-        test_read_all())
+    // below tests sequence order is important !
+    rc_mode_validity = test_mode_validity();
+    rc_flash_empty   = test_flash_empty();
+    rc_write_read    = test_write_read();
+//    rc_flash_full    = test_flash_full();
+//    rc_read_all      = test_read_all();
+
+    if (rc_mode_validity &&
+        rc_flash_empty &&
+        rc_flash_full &&
+        rc_write_read &&
+        rc_read_all)
     {
-        rc = 0;
+        return 0;
     }
 
     return rc;
