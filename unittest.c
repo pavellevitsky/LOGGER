@@ -4,10 +4,10 @@
 #include "configuration.h"
 #include "logger.h"
 
-#define BUFFER_A_SIZE 32
-#define BUFFER_B_SIZE 128
+#define BUFFER_A_SIZE 64*16
+#define BUFFER_B_SIZE 512*8
 #define BUFFER_C_SIZE 77
-#define BUFFER_READ_SIZE 1024
+#define BUFFER_READ_SIZE 1024*16
 
 static void initialise_buffer (uint8_t*, int, int);
 
@@ -19,7 +19,7 @@ bool test_mode_validity (void)
     bool rc_nesting_mode;
 
     rc_unexpected_mode = logger_open (IDLE) == -1;  // IDLE is not valid mode
-    rc_read_mode       = logger_open(READ) == 0;    // set mode to READ
+    rc_read_mode       = logger_open (READ) == 0;   // set mode to READ
     logger_close();                                 // reset mode
     rc_write_mode      = logger_open (WRITE) == 0;  // set mode to WRITE
     rc_nesting_mode    = logger_open (READ) == -2;  // set mode to READ while active WRITE mode
@@ -28,21 +28,22 @@ bool test_mode_validity (void)
     return rc_unexpected_mode && rc_read_mode && rc_write_mode && rc_nesting_mode;
 }
 
-bool test_flash_empty (void)
+bool test_read_from_empty_flash(void)
 {
     bool rc;
     uint8_t buffer_read[BUFFER_READ_SIZE];
     unsigned int size = 32;
 
+    initialise_buffer (buffer_read, sizeof(buffer_read), 0);  // initialise buffer; flash is empty now
+
     logger_open (READ);
-    initialise_buffer (buffer_read, sizeof(buffer_read), 0);
-    rc = logger_read (buffer_read, &size) != 0;  // read must fail when flash is empty
+    rc = logger_read (buffer_read, &size) != 0;  // reading from empty flash must fail
     logger_close();
 
     return rc;
 }
 
-bool test_flash_full (void)
+bool test_write_to_full_flash (void)
 {
     uint8_t data[FLASH_SIZE/4 + 1];
     bool rc1, rc2, rc3, rc4;

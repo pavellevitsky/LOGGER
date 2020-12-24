@@ -3,10 +3,6 @@
 #include "flash.h"
 #include "configuration.h"
 
-uint32_t g_write_pointer;  // global var points to next write operation address
-uint32_t g_read_pointer;   // global var points to next read operation address
-uint32_t g_total_size;     // global var contains data size currently logged in flash
-
 enum mode e_mode;
 
 // declaration of static functios; documentation and implementation below.
