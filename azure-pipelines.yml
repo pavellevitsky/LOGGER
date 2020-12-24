@@ -14,8 +14,7 @@ steps:
 
 - script: |
    main.exe
-   echo Exit Code:%errorlevel%
-   exit errorlevel
+   exit %errorlevel%
   displayName: '[step] execute code'
 
 - script: make clean
