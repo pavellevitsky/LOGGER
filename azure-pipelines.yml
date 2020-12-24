@@ -13,7 +13,7 @@ steps:
   displayName: '[step] make'
 
 - script: |
-   dir *.exe
    main.exe
-   dir *.bin
+   echo Exit Code:%errorlevel%
+   exit errorlevel
   displayName: '[step] execute main()'
