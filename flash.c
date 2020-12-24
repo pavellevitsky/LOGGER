@@ -11,7 +11,7 @@ static void flash_create(void)
     
     memset(buf, 0xFF, sizeof(buf));
 
-    for (int i=0; i < 64; i++)
+    for (int i=0; i < 16; i++)
     {
         fwrite(buf, 1, sizeof(buf), fp);
     }

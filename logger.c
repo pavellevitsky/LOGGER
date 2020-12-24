@@ -3,10 +3,6 @@
 #include "flash.h"
 #include "configuration.h"
 
-uint32_t g_write_pointer;  // global var points to next write operation address
-uint32_t g_read_pointer;   // global var points to next read operation address
-uint32_t g_total_size;     // global var contains data size currently logged in flash
-
 enum mode e_mode;
 
 // declaration of static functios; documentation and implementation below.
@@ -52,6 +48,17 @@ int logger_open (int mode)
 
     e_mode = mode;  // keep requested mode a global variable
     return 0;
+}
+
+/**
+ * @brief Close the logger session
+ *
+ * This function terminates the current logger session and should be called
+ * for every logger_open() call
+ */
+void logger_close(void)
+{
+    e_mode = IDLE;
 }
 
 /**
@@ -197,17 +204,6 @@ int logger_write (unsigned char *data, unsigned int size)
     }
 
     return 0;
-}
-
-/**
- * @brief Close the logger session
- *
- * This function terminates the current logger session and should be called
- * for every logger_open() call
- */
-void logger_close (void)
-{
-    e_mode = IDLE;
 }
 
 /**
