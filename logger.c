@@ -220,7 +220,7 @@ static void copy_sector_to_local_buffer (uint16_t sector, unsigned char *buffer)
     int page_start = sector * SECTOR_SIZE / PAGE_SIZE;  // convert sector number to its first page number
 
     // copy sector content to provided buffer
-    for (int p = page_start+1; p < page_start + SECTOR_SIZE / PAGE_SIZE; p++)
+    for (int p = page_start; p < page_start + SECTOR_SIZE / PAGE_SIZE; p++)
     {
         flash_read (p, buffer + (p - page_start) * PAGE_SIZE);  // copy page to relevant place in buffer
     }
