@@ -92,7 +92,7 @@ int logger_read (unsigned char *data, unsigned int *size)
     {
         return -2;  // flash memory is empty - nothing to read
     }
-    if (g_total_size < *size)
+    if (g_total_size < (int)*size)
     {
         *size = g_total_size;  // limit read data size by available data size
     }
