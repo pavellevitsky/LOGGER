@@ -25,7 +25,7 @@ int run_unit_tests(void)
     bool rc_write_read_1;
     bool rc_write_read_2;
     bool rc_write_read_3;
-    // bool rc_write_read_4;
+    bool rc_write_read_4;
     bool rc_read_all;
     bool rc;
 
@@ -41,8 +41,7 @@ int run_unit_tests(void)
     rc_write_read_1 = test_write_read();
     rc_write_read_2 = test_write_read();
     rc_write_read_3 = test_write_read();
-    // rc_write_read_4 = test_write_read();
-    // printf("rc_write_read_4:%d\n", rc_write_read_4);
+    rc_write_read_4 = false;  // test_write_read();
 
     logger_init();
 
@@ -54,6 +53,7 @@ int run_unit_tests(void)
         rc_write_read_1 &&
         rc_write_read_2 &&
         rc_write_read_3 &&
+        rc_write_read_4 &&
         rc_read_all;
 
     printf("rc_mode_validity:%d\n", rc_mode_validity);
@@ -62,6 +62,7 @@ int run_unit_tests(void)
     printf("rc_write_read_1:%d\n", rc_write_read_1);
     printf("rc_write_read_2:%d\n", rc_write_read_2);
     printf("rc_write_read_3:%d\n", rc_write_read_3);
+    printf("rc_write_read_4:%d (ignored)\n", rc_write_read_4);
     printf("rc_read_all:%d\n", rc_read_all);
     printf("[bool] rc:%d\n", rc);
 
