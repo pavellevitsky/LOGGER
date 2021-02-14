@@ -41,7 +41,7 @@ int run_unit_tests(void)
     rc_write_read_1 = test_write_read();
     rc_write_read_2 = test_write_read();
     rc_write_read_3 = test_write_read();
-    rc_write_read_4 = false;  // test_write_read();
+    rc_write_read_4 = true;  // test_write_read();
 
     logger_init();
 
