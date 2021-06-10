@@ -12,6 +12,7 @@
 
 static bool test_mode_validity(void);
 static bool test_read_from_empty_flash(void);
+static bool test_full_capacity(void);
 static bool test_write_to_full_flash(void);
 static bool test_write_read(void);
 static bool test_read_all(void);
@@ -22,6 +23,7 @@ int run_unit_tests(void)
     bool rc_mode_validity;
     bool rc_read_from_empty_flash;
     bool rc_write_to_full_flash;
+    bool rc_full_capacity;
     bool rc_write_read_1;
     bool rc_write_read_2;
     bool rc_write_read_3;
@@ -38,6 +40,10 @@ int run_unit_tests(void)
 
     logger_init();
 
+    rc_full_capacity = test_full_capacity();
+
+    logger_init();
+
     rc_write_read_1 = test_write_read();
     rc_write_read_2 = test_write_read();
     rc_write_read_3 = test_write_read();
@@ -50,6 +56,7 @@ int run_unit_tests(void)
     rc = rc_mode_validity &&
         rc_read_from_empty_flash &&
         rc_write_to_full_flash &&
+        rc_full_capacity &&
         rc_write_read_1 &&
         rc_write_read_2 &&
         rc_write_read_3 &&
@@ -59,6 +66,7 @@ int run_unit_tests(void)
     printf("rc_mode_validity:%d\n", rc_mode_validity);
     printf("rc_read_from_empty_flash:%d\n", rc_read_from_empty_flash);
     printf("rc_write_to_full_flash:%d\n", rc_write_to_full_flash);
+    printf("rc_full_capacity:%d\n", rc_full_capacity);
     printf("rc_write_read_1:%d\n", rc_write_read_1);
     printf("rc_write_read_2:%d\n", rc_write_read_2);
     printf("rc_write_read_3:%d\n", rc_write_read_3);
@@ -101,6 +109,26 @@ static bool test_read_from_empty_flash(void)
     return rc;
 }
 
+static bool test_full_capacity(void)
+{
+#define NUM  8
+    bool    rc = true;
+    uint8_t data[FLASH_SIZE/NUM];
+
+    initialise_buffer (data, sizeof(data), 0);
+
+    logger_open (WRITE);
+
+    for (uint8_t i = 0; i < NUM; i++)
+    {
+        rc = (rc && (logger_write (data, sizeof(data)) == 0));
+    }
+
+    logger_close();
+
+    return rc;
+}
+
 static bool test_write_to_full_flash (void)
 {
     uint8_t data[FLASH_SIZE/4 + 1];
@@ -109,10 +137,12 @@ static bool test_write_to_full_flash (void)
     initialise_buffer (data, sizeof(data), 0);
 
     logger_open (WRITE);
+
     rc1 = logger_write (data, sizeof(data)) == 0;  // first write must pass
     rc2 = logger_write (data, sizeof(data)) == 0;  // second write must pass
     rc3 = logger_write (data, sizeof(data)) == 0;  // third write must pass
     rc4 = logger_write (data, sizeof(data)) != 0;  // fourth write must fail
+
     logger_close();
 
     return rc1 && rc2 && rc3 && rc4;
@@ -120,21 +150,21 @@ static bool test_write_to_full_flash (void)
 
 static bool test_write_read (void)
 {
-    uint8_t buffer_b[BUFFER_B_SIZE];
     uint8_t buffer_a[BUFFER_A_SIZE];
+    uint8_t buffer_b[BUFFER_B_SIZE];
     uint8_t buffer_c[BUFFER_C_SIZE];
     uint8_t buffer_read[BUFFER_READ_SIZE];
     unsigned int size;
     bool rc1, rc2, rc3;
 
-    initialise_buffer(buffer_b, sizeof(buffer_b), BUFFER_B_SIZE);
     initialise_buffer(buffer_a, sizeof(buffer_a), BUFFER_A_SIZE);
+    initialise_buffer(buffer_b, sizeof(buffer_b), BUFFER_B_SIZE);
     initialise_buffer(buffer_c, sizeof(buffer_c), BUFFER_C_SIZE);
 
     /* WRITE */
     logger_open(WRITE);
-    logger_write(buffer_b, sizeof(buffer_b));
     logger_write(buffer_a, sizeof(buffer_a));
+    logger_write(buffer_b, sizeof(buffer_b));
     logger_write(buffer_c, sizeof(buffer_c));
     logger_close();
 
@@ -142,14 +172,14 @@ static bool test_write_read (void)
     logger_open(READ);
 
     initialise_buffer(buffer_read, sizeof(buffer_read), 0);
-    size = BUFFER_B_SIZE;
-    logger_read(buffer_read, &size);
-    rc1 = memcmp (buffer_read, buffer_b, BUFFER_B_SIZE) == 0;
-
-    initialise_buffer(buffer_read, sizeof(buffer_read), 0);
     size = BUFFER_A_SIZE;
     logger_read(buffer_read, &size);
     rc2 = memcmp(buffer_read, buffer_a, BUFFER_A_SIZE) == 0;
+
+    initialise_buffer(buffer_read, sizeof(buffer_read), 0);
+    size = BUFFER_B_SIZE;
+    logger_read(buffer_read, &size);
+    rc1 = memcmp(buffer_read, buffer_b, BUFFER_B_SIZE) == 0;
 
     initialise_buffer(buffer_read, sizeof(buffer_read), 0);
     size = BUFFER_C_SIZE;

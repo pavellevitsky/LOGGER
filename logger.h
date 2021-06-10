@@ -1,4 +1,4 @@
- /**
+/**
   * @brief Initialize the logger module
   *
   * This functions initialized all the data of the logger module and prepares the
