@@ -130,12 +130,13 @@ static bool test_full_capacity(void)
 static bool test_write_to_full_flash (void)
 {
     bool rc1, rc2;
+    uint8_t data[8];
 
     rc1 = test_full_capacity();
 
     logger_open (WRITE);
 
-    rc2 = logger_write (data, 32) != 0;  // write to already full flash
+    rc2 = logger_write (data, sizeof(data)) != 0;  // write to already full flash
 
     logger_close();
 
