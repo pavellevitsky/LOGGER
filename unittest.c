@@ -115,8 +115,6 @@ static bool test_full_capacity(void)
     bool    rc = true;
     uint8_t data[FLASH_SIZE/NUM];
 
-    initialise_buffer (data, sizeof(data), 0);
-
     logger_open (WRITE);
 
     for (uint8_t i = 0; i < NUM; i++)
@@ -131,21 +129,17 @@ static bool test_full_capacity(void)
 
 static bool test_write_to_full_flash (void)
 {
-    uint8_t data[FLASH_SIZE/4 + 1];
-    bool rc1, rc2, rc3, rc4;
+    bool rc1, rc2;
 
-    initialise_buffer (data, sizeof(data), 0);
+    rc1 = test_full_capacity();
 
     logger_open (WRITE);
 
-    rc1 = logger_write (data, sizeof(data)) == 0;  // first write must pass
-    rc2 = logger_write (data, sizeof(data)) == 0;  // second write must pass
-    rc3 = logger_write (data, sizeof(data)) == 0;  // third write must pass
-    rc4 = logger_write (data, sizeof(data)) == 0;  // fourth write must fail
+    rc2 = logger_write (data, 32) != 0;  // write to already full flash
 
     logger_close();
 
-    return rc1 && rc2 && rc3 && rc4;
+    return rc1 && rc2;
 }
 
 static bool test_write_read (void)
