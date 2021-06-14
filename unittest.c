@@ -141,7 +141,7 @@ static bool test_write_to_full_flash (void)
     rc1 = logger_write (data, sizeof(data)) == 0;  // first write must pass
     rc2 = logger_write (data, sizeof(data)) == 0;  // second write must pass
     rc3 = logger_write (data, sizeof(data)) == 0;  // third write must pass
-    rc4 = logger_write (data, sizeof(data)) != 0;  // fourth write must fail
+    rc4 = logger_write (data, sizeof(data)) == 0;  // fourth write must fail
 
     logger_close();
 
