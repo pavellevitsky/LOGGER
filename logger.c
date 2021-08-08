@@ -125,7 +125,7 @@ int logger_write (unsigned char *data, unsigned int size)
     sector_first = page_to_sector_number (page_first);     // get starting sector of logged data
     sector_last  = page_to_sector_number (page_last);      // get last sector of logged data
 
-    for (int s = sector_first; s < sector_last; s++)
+    for (int s = sector_first; s <= sector_last; s++)
     {
         copy_sector_to_local_buffer (s, buffer);     // copy sector content to local buffer
 
